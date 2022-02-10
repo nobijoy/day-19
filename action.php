@@ -29,7 +29,10 @@ if (isset($_GET['pages'])){
     }
     elseif ($_GET['pages']== 'register'){
         if (isset($_SESSION['id'])){
+            $register = new Register();
+            $register->add();
             include 'pages/register.php';
+
         }
         else{
             $auth = new Auth();
@@ -49,6 +52,12 @@ if (isset($_GET['pages'])){
     elseif ($_GET['pages']== 'logout'){
         $auth = new Auth();
         $auth->logout();
+    }
+    elseif ($_GET['pages']=='all-data'){
+        $register = new Register();
+        $result = $register->allData();
+        echo '<pre>';
+        print_r($result);
     }
     else{
         if(isset($_SESSION['id'])){
@@ -79,8 +88,8 @@ elseif (isset($_POST['series_btn'])){
 }
 elseif (isset($_POST['register_btn'])){
     $register = new Register($_POST);
-//    $result =$register->sumOfNumber();
-//    include 'pages/register.php';
+    $message = $register->add();
+    include 'pages/register.php';
 }
 elseif (isset($_POST['login_btn'])){
     $auth = new Auth($_POST);
